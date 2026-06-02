@@ -9,6 +9,12 @@ Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
 
+#import sqlite3 
+#with sqlite3.connect("learning.db") as conn:
+#    cursor = conn.cursor()
+#    cursor.execute("DROP TABLE users")
+#    cursor.execute("DROP TABLE study")
+
 import utils as ut
 
 class User(Base):
@@ -91,7 +97,7 @@ class Results(Base):
     user_id = Column(Integer,ForeignKey("users.id"))
     student = relationship("User",back_populates="id")
     exersize_id = Column(Integer,ForeignKey("study.id"))
-    exersize = relationship("Study",back_populate="id")
+    exersize = relationship("Study",back_populates="id")
     variant = Column(Integer,nullable=False)
     ball = Column(SmallInteger,default=-1)
 
