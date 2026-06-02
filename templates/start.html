@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Начало{% endblock %}
+
+{% block header %}<h1>Начало</h1>{% endblock %}
+{% block main %}
+    {% if admin %}
+        <h2>Вы админ</h2>
+        <a href="/admin">Админ панель</a>|
+    {% endif %}
+    <a href="/test">Пройти тест</a>|
+    <a href="/login">Войти</a>
+{% endblock %}
+{% block footer %}{% endblock %}

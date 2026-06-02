@@ -8,12 +8,6 @@ engine = create_engine("sqlite:///learning.db",echo=True)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
-#import sqlite3 
-#with sqlite3.connect("learning.db") as conn:
-#    cursor = conn.cursor()
-#    cursor.execute("DROP TABLE users")
-#    cursor.execute("DROP TABLE study")
-
 import utils as ut
 
 class User(Base):
@@ -51,14 +45,15 @@ class User(Base):
 
     @classmethod
     def select_user(cls,idscond:tuple=tuple()):
-        lenght = len(idscond)
-        if lenght == 0: return session.query(cls).all()
-        if lenght == 1 and type(idscond[0])==int: return session.query(cls).get(idscond[0])
-        if all(type(i)==int for i in idscond):
-            return session.query(cls).filter(" AND ".join(f"id == {i}" for i in idscond)).all()
-        if all(type(i)==str for i in idscond):
-            return session.query(cls).filter(" AND ".join(i for i in idscond)).all()
-        raise ValueError("all elements of idscond must be of the same type ('str' or 'int')")
+        with Session() as session:
+            lenght = len(idscond)
+            if lenght == 0: return session.query(cls).all()
+            if lenght == 1 and type(idscond[0])==int: return session.query(cls).get(idscond[0])
+            if all(type(i)==int for i in idscond):
+                return session.query(cls).filter(" AND ".join(f"id == {i}" for i in idscond)).all()
+            if all(type(i)==str for i in idscond):
+                return session.query(cls).filter(" AND ".join(i for i in idscond)).all()
+            raise ValueError("all elements of idscond must be of the same type ('str' or 'int')")
 
 
 class Study(Base):
@@ -83,11 +78,12 @@ class Study(Base):
 
     @classmethod
     def add_exersize(cls,**kwargs):
-        if all(i in kwargs for i in ("exersize","answer","theme")):
-            exersize = cls(**kwargs)
-            session.add(exersize)
-        else: raise ValueError("not all arguments to add new user")
-        session.commit()
+        with Session() as session:
+            if all(i in kwargs for i in ("exersize","answer","theme")):
+                exersize = cls(**kwargs)
+                session.add(exersize)
+            else: raise ValueError("not all arguments to add new user")
+            session.commit()
     select_exersize = User.select_user
 
 
@@ -106,11 +102,12 @@ class Results(Base):
 Задание {str(Study.select_exersize((self.exersize_id,)))}."
     
     def add_test(cls,**kwargs):
-        if all(i in kwargs for i in ("user_id","exersize_id","variant")):
-            user = cls(**kwargs)
-            session.add(user)
-        else: raise ValueError("not all arguments to add new user")
-        session.commit()
+        with Session() as session:
+            if all(i in kwargs for i in ("user_id","exersize_id","variant")):
+                user = cls(**kwargs)
+                session.add(user)
+            else: raise ValueError("not all arguments to add new user")
+            session.commit()
 
     select_test = User.select_user
 
