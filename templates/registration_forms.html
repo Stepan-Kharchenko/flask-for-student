@@ -5,9 +5,29 @@
 {% block header %}<h1>Регистрация</h1>{% endblock %}
 {% block main %}
     <form method="post" action="/registration/end">
-        <label style="font-family:'Courier New', Courier, monospace">Имя: &nbsp;&nbsp;&nbsp;&nbsp;</label><input type="text" name="name"><br>
-        <label style="font-family:'Courier New', Courier, monospace">Фамилия: </label><input type="text" name="surname"><br>
-        <label style="font-family:'Courier New', Courier, monospace">email: &nbsp;&nbsp;</label><input type="email" name="email"><br>
+        <label style="font-family:'Courier New', Courier, monospace">
+            Имя:&nbsp;&nbsp;&nbsp;&nbsp;
+        </label><input type="text" name="first_name" required><br>
+        <label style="font-family:'Courier New', Courier, monospace">
+            Фамилия: 
+        </label><input type="text" name="last_name" required><br>
+        <label style="font-family:'Courier New', Courier, monospace">
+            email:&nbsp;&nbsp;
+        </label><input type="email" name="email" required><br>
+        <label style="font-family:'Courier New', Courier, monospace">
+            Класс/курс:
+        </label>
+        <select name="class">
+            {% for i in (9,10,11,1,2,3,4,5,6) %}
+                <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select><br>
+        <label style="font-family:'Courier New', Courier, monospace">
+            Физика: 
+        </label><input type="checkbox" name="physic" value="True">
+        <label style="font-family:'Courier New', Courier, monospace">
+            Математика: 
+        </label><input type="checkbox" name="math" value="True"><br>
         <input type="submit" value="Отправить">
     </form>
 {% endblock %}

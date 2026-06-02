@@ -18,9 +18,13 @@ def registration():
 
 @app.route("/registration/end",methods=["POST"])
 def end_of_registration():
-    d = request.form
-    print(d)
-    return f"Спасибо, {d['surname']} {d['name']}. Ваша почта - {d['email']}"
+    d = dict(request.form)
+    d["math"],d["physic"] = "math" in d, "physic" in d
+    d["user_class"] = d["class"]
+    del d["class"]
+    m.User.add_user(**d)
+    return f"Спасибо, {d['last_name']} {d['first_name']}. Ваши данные сохранены.|\
+<a href='/'>Главная</a>"
 
 if __name__ == "__main__":
     print("run")

@@ -6,7 +6,6 @@ from sqlalchemy.orm import sessionmaker,relationship
 
 engine = create_engine("sqlite:///learning.db",echo=True)
 Session = sessionmaker(bind=engine)
-session = Session()
 Base = declarative_base()
 
 #import sqlite3 
@@ -26,7 +25,7 @@ class User(Base):
     user_class = Column(SmallInteger,default=11,name="class")
     physic,math = Column(Boolean,default=False),Column(Boolean,default=False)
     created_at = Column(Date,default=datetime.utcnow)
-    result = relationship("Results",back_populates="user_id")
+    result = relationship("Results",back_populates="student")
     columns = ("id","vk_id","ip_id","first_name","last_name","email","class","physic","math","created_at")
 
     def __repr__(self):
@@ -43,11 +42,12 @@ class User(Base):
 
     @classmethod
     def add_user(cls,**kwargs):
-        if all(i in kwargs for i in ("first_name","last_name","email")):
-            user = cls(**kwargs)
-            session.add(user)
-        else: raise ValueError("not all arguments to add new user")
-        session.commit()
+        with Session() as session:
+            if all(i in kwargs for i in ("first_name","last_name","email")):
+                user = cls(**kwargs)
+                session.add(user)
+            else: raise ValueError("not all arguments to add new user")
+            session.commit()
 
     @classmethod
     def select_user(cls,idscond:tuple=tuple()):
@@ -69,7 +69,7 @@ class Study(Base):
     index = Column(Integer,default=0)
     exersize,answer = Column(Text,nullable=False),Column(Text,nullable=False)
     study_class = Column(SmallInteger,default=11,name="class")
-    result = relationship("Results",back_populates="exersize_id")
+    result = relationship("Results",back_populates="exersize")
     columns = ("id","math","theme","index","exersize","answer","class")
 
     def __repr__(self)->str:
@@ -95,9 +95,9 @@ class Results(Base):
     __tablename__ = "results"
     id = Column(Integer,primary_key=True,autoincrement=True)
     user_id = Column(Integer,ForeignKey("users.id"))
-    student = relationship("User",back_populates="id")
+    student = relationship("User",back_populates="result")
     exersize_id = Column(Integer,ForeignKey("study.id"))
-    exersize = relationship("Study",back_populates="id")
+    exersize = relationship("Study",back_populates="result")
     variant = Column(Integer,nullable=False)
     ball = Column(SmallInteger,default=-1)
 
