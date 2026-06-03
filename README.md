@@ -6,19 +6,33 @@
 ## Структура проекта и краткое описание работы
 ```
 teacher/
-    .gitignore
+    templates/
+        login/
+            lofin.html
+            registration_forms.html
+        admin/
+            add_exersize.html
+            panel.html
+            statistic.html
+        base.html
+        index.html
+        start.html
+    scripts/
+        admin/
+            __init__.py
+            add.py
+        __init__.py
+        login.py
+        test.py
+    images/
+    static/
     app.py
     models.py
     utils.py
     learning.db
     README.md
     secret.env
-    images/
-    static/
-    templates/
-        base.html
-        index.html
-        registration_forms.html
+    .gitignore
 ```
 ## Структура БД
 ![Здесь должны быть структура БД](/images/database_structure.png)

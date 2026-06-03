@@ -18,9 +18,9 @@
                 <option value="{{ i }}">{{ i }}</option>
             {% endfor %}
         </select><br>
-        <label style="font-family:'Courier New', Courier, monospace">
-            Введите задание:
-        </label><input type="text" name="exersize" required><br>
+        <label style="font-family:'Courier New', Courier, monospace" for="ex">
+            Введите задание: 
+        </label><input type="text" name="exersize" if="ex" required><br>
         <label style="font-family:'Courier New', Courier, monospace">
             Введите ответ:&nbsp;&nbsp;
         </label><input type="text" name="answer" required><br>

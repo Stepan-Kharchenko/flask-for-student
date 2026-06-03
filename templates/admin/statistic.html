@@ -1,0 +1,28 @@
+{% extends "admin/panel.html" %}
+
+{% block title %}Статистика{% endblock %}
+
+{% block header %}<h1>Статистика</h1>{% endblock %}
+{% block main %}
+    <h2>Статистика учеников</h2>
+    <table border="2px">
+        <tr>
+            <th>Имя Фамилия</th>
+            <th>email</th>
+            <th>Класс/курс</th>
+            <th>Зарегестрирвоан</th>
+            <th>Средний процент по физике</th>
+            <th>Средний процент по математике</th>
+        </tr>
+        {% for i in users %}
+            <tr>
+                <td>{{ i.first_name }} {{ i.last_name }}</td>
+                <td>{{ i.email }}</td>
+                <td>{{ i.user_class }}</td>
+                <td>{{ i.created_at }}</td>
+                <td>{{ f(i,"physic") }}%</td>
+                <td>{{ f(i,"math") }}%</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

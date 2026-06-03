@@ -8,13 +8,14 @@ def initialize(app:Flask):
 
     @app.route("/registration/end",methods=["POST"])
     def end_of_registration():
-        d = dict(request.form)
-        d["math"],d["physic"] = "math" in d, "physic" in d
-        d["user_class"] = d["class"]
-        del d["class"]
-        m.User.add_user(**d)
-        return f"Спасибо, {d['last_name']} {d['first_name']}. Ваши данные сохранены.|\
-    <a href='/'>Главная</a>"
+        try:
+            d = dict(request.form)
+            d["math"],d["physic"] = "math" in d, "physic" in d
+            d["user_class"] = d["class"]
+            del d["class"]
+            m.User.add_user(**d)
+            return f"Спасибо, {d['last_name']} {d['first_name']}. Ваши данные сохранены. | <a href='/'>Главная</a>"
+        except ValueError as e: return "Пользователь с таким email уже существует | <a href='/'>Главная</a>"
 
     @app.route("/login")
     def login(): return render_template("login/login.html")

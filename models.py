@@ -3,6 +3,7 @@ from sqlalchemy import create_engine,Column
 from sqlalchemy import Integer,Text,Date,VARCHAR,SmallInteger,Boolean,ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker,relationship
+from sqlalchemy.exc import IntegrityError
 
 engine = create_engine("sqlite:///learning.db",echo=False)
 Session = sessionmaker(bind=engine)
@@ -36,12 +37,14 @@ class User(Base):
 
     @classmethod
     def add_user(cls,**kwargs):
-        with Session() as session:
-            if all(i in kwargs for i in ("first_name","last_name","email")):
-                user = cls(**kwargs)
-                session.add(user)
-            else: raise ValueError("not all arguments to add new user")
-            session.commit()
+        try:
+            with Session() as session:
+                if all(i in kwargs for i in ("first_name","last_name","email")):
+                    user = cls(**kwargs)
+                    session.add(user)
+                else: raise ValueError("not all arguments to add new user")
+                session.commit()
+        except IntegrityError: raise ValueError("Пользователь с таким email уже существует")
 
     @classmethod
     def select_user(cls,idscond:tuple=tuple()):
@@ -120,7 +123,17 @@ class Results(Base):
             else: raise ValueError("not all arguments to add new user")
             session.commit()
 
-    select_test = User.select_user
+    @classmethod
+    def select_test(cls,idscond:tuple=tuple()):
+        with Session() as session:
+            lenght = len(idscond)
+            if lenght == 0: return session.query(cls).all()
+            if lenght == 1 and type(idscond[0])==int: return session.query(cls).get(idscond[0])
+            if lenght == 1:
+                return session.query(cls).filter(idscond[0]).all()
+            if all(type(i)==int for i in idscond):
+                return session.query(cls).filter(" AND ".join(f"id == {i}" for i in idscond)).all()
+            raise ValueError("all elements of idscond must be of the same type ('str' or 'int')")
 
 
 Base.metadata.create_all(engine)
