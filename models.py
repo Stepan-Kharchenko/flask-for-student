@@ -4,7 +4,7 @@ from sqlalchemy import Integer,Text,Date,VARCHAR,SmallInteger,Boolean,ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker,relationship
 
-engine = create_engine("sqlite:///learning.db",echo=True)
+engine = create_engine("sqlite:///learning.db",echo=False)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 

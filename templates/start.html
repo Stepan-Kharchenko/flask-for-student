@@ -4,11 +4,15 @@
 
 {% block header %}<h1>Начало</h1>{% endblock %}
 {% block main %}
-    {% if admin %}
-        <h2>Вы админ</h2>
-        <a href="/admin">Админ панель</a>|
+    {% if validate %}
+        {% if admin %}
+            <h2>Вы админ</h2>
+            <a href="/admin">Админ панель</a>|
+        {% endif %}
+        <a href="/test">Пройти тест</a>|
+        <a href="/login">Войти</a>
+    {% else %}
+        <h2>Вас нет в системе|<a href="/registration">Регистрация</a></h2>
     {% endif %}
-    <a href="/test">Пройти тест</a>|
-    <a href="/login">Войти</a>
 {% endblock %}
 {% block footer %}{% endblock %}
