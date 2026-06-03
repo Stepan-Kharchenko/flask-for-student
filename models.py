@@ -49,10 +49,10 @@ class User(Base):
             lenght = len(idscond)
             if lenght == 0: return session.query(cls).all()
             if lenght == 1 and type(idscond[0])==int: return session.query(cls).get(idscond[0])
+            if lenght == 1:
+                return session.query(cls).filter(idscond[0]).all()
             if all(type(i)==int for i in idscond):
                 return session.query(cls).filter(" AND ".join(f"id == {i}" for i in idscond)).all()
-            if all(type(i)==str for i in idscond):
-                return session.query(cls).filter(" AND ".join(i for i in idscond)).all()
             raise ValueError("all elements of idscond must be of the same type ('str' or 'int')")
 
 
@@ -84,7 +84,18 @@ class Study(Base):
                 session.add(exersize)
             else: raise ValueError("not all arguments to add new user")
             session.commit()
-    select_exersize = User.select_user
+    
+    @classmethod
+    def select_exersize(cls,idscond:tuple=tuple()):
+        with Session() as session:
+            lenght = len(idscond)
+            if lenght == 0: return session.query(cls).all()
+            if lenght == 1 and type(idscond[0])==int: return session.query(cls).get(idscond[0])
+            if lenght == 1:
+                return session.query(cls).filter(idscond[0]).all()
+            if all(type(i)==int for i in idscond):
+                return session.query(cls).filter(" AND ".join(f"id == {i}" for i in idscond)).all()
+            raise ValueError("all elements of idscond must be of the same type ('str' or 'int')")
 
 
 class Results(Base):

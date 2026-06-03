@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Админ панель{% endblock %}
+{% block header %}
+    <h1>Админ-панель</h1>
+    <p>В разработке: добавить задание, составить тест, посмотреть статистику</p>
+{% endblock %}
+{% block main %}
+    <h2>Добавить задание</h2>
+    <form method="post" action="/admin/add_exersize">
+        <label>Физика</label><input type="radio" name="subject" value="physic">
+        <label>Математика</label><input type="radio" name="subject" value="math">
+        <input type="submit" value="Добавить">
+    </form><hr>
+    <h2>Составить тест</h2><hr>
+    <h2>Посмотреть статистику</h2><hr>
+{% endblock %}
+{% block footer %}
+    <a href="/">Главная</a>|<a href="/login">Вход</a>
+{% endblock %}
