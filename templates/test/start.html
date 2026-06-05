@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Выбор теста{% endblock %}
+
+{% block header %}<h1>Выберите подходящий для решения тест</h1>{% endblock %}
+{% block main %}
+    <form action="/test/go?email={{ email }}" method="post">
+        <table border="1px">
+            <tr>
+                <th>Выбор</th>
+                <th>Вариант</th>
+                <th>Предмет</th>
+            </tr>
+                {% for i in dct %}
+                    <tr>
+                        <td><input type="radio" name="variant" value="{{ i }}"></td>
+                        <td>{{ i }}</td>
+                        <td>{{ dct[i] }}</td>
+                    </tr>
+                {% endfor %}
+        </table>
+        <input type="submit" value="Выбрать">
+    </form>
+{% endblock %}
+{% block footer %}<a href="/">Главная</a>|<a href="/login/validation?email={{ email }}">Начало</a>{% endblock %}

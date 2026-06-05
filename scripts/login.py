@@ -18,11 +18,14 @@ def initialize(app:Flask):
         except ValueError as e: return "Пользователь с таким email уже существует | <a href='/'>Главная</a>"
 
     @app.route("/login")
-    def login(): return render_template("login/login.html")
+    def login():
+        return render_template("login/login.html")
 
-    @app.route("/login/validation",methods=["POST"])
+    @app.route("/login/validation",methods=["GET"])
     def validation():
-        mail = request.form["email"]
+        mail = request.args.get("email")
+        print(mail)
         return render_template("start.html",
                                validate=ut.validate(mail),
-                               admin=ut.validate_admin(mail))
+                               admin=ut.validate_admin(mail),
+                               email=mail)

@@ -4,7 +4,7 @@
 
 {% block header %}<h1>Вход</h1>{% endblock %}
 {% block main %}
-    <form method="post" action="/login/validation">
+    <form method="get" action="/login/validation">
         <label>Введите ваш email: </label><input type="email" name="email">
         <input type="Submit" value="Войти">
     </form>

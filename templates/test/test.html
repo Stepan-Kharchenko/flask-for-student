@@ -1,0 +1,15 @@
+{% extends "test/start.html" %}
+
+{% block title %}Тест{% endblock %}
+
+{% block header %}<h1>Пройдите тест</h1><hr><hr>{% endblock %}
+{% block main %}
+    <form action="/test/test?email={{ email }}"  method="post">
+        {% for i in ids %}
+            <h3>Задание {{ ids.index(i)+1 }}</h3>
+            {{ m.Study.select_exersize(m.Results.select_test(i).exersize_id).exersize }}
+            <input type="text" name="answer{{ i }}" required><hr>
+        {% endfor %}
+        <input type="submit" value="Отправить">
+    </form>
+{% endblock %}

@@ -104,7 +104,7 @@ class Results(Base):
     ball = Column(SmallInteger,default=-1)
 
     def __repr__(self):
-        return f"Это вариант ученика {str(User.select_user((self.user_id,)))}. \
+        return f"Это вариант ученика {str(User.select_user(self.user_id))}. \
 Задание {str(Study.select_exersize((self.exersize_id,)))}."
     
     @classmethod

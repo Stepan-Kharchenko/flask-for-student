@@ -37,12 +37,12 @@
         </tr>
         {% for i in exersizes %}
             <tr>
-                <th>{{ "Математика" if i.math else "Физика"}}, {{ i.theme }}</th>
-                <th>{{ i.index }}</th>
-                <th>{{ i.study_class }}</th>
-                <th>{{ i.exersize }}</th>
-                <th>{{ i.answer }}</th>
-                <th>{{ f2(i) }}%</th>
+                <td>{{ "Математика" if i.math else "Физика"}}, {{ i.theme }}</td>
+                <td>{{ i.index }}</td>
+                <td>{{ i.study_class }}</td>
+                <td>{{ i.exersize }}</td>
+                <td>{{ i.answer }}</td>
+                <td>{{ f2(i) }}%</td>
             </tr>
         {% endfor %}
     </table>
