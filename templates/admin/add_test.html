@@ -1,0 +1,42 @@
+{% extends "admin/panel.html" %}
+
+{% block title %}Составление теста{% endblock %}
+
+{% block header %}<h1>Составить тест</h1><hr>{% endblock %}
+{% block main %}
+    <form method="post" action="/admin/test/end">
+        <h2>Выберите задания</h2>
+        <table border="4px">
+            <tr>
+                <th>Выбор</th>
+                <th>Тема</th>
+                <th>Задание</th>
+                <th>Ответ</th>
+            </tr>
+            {% for i in exersizes %}
+                <tr>
+                    <td><input type="checkbox" name="ex{{ i.id }}" value="True"></td>
+                    <td>{{ i.theme }}</td>
+                    <td>{{ i.exersize }}</td>
+                    <td>{{ i.answer }}</td>
+                </tr>
+            {% endfor %}
+        </table><hr>
+        <h2>Выберите учеников</h2>
+        <table border="1px">
+            <tr>
+                <th>Выбор</th>
+                <th>Имя Фамилия</th>
+                <th>email</th>
+            </tr>
+            {% for i in users %}
+                <tr>
+                    <td><input type="checkbox" name="st{{ i.id }}" value="True"></td>
+                    <td>{{ i.first_name }} {{i.last_name }}</td>
+                    <td>{{ i.email }}</td>
+                </tr>
+            {% endfor %}
+        </table><hr>
+        <input type="submit" value="Составить">
+    </form>
+{% endblock %}

@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import create_engine,Column
+from sqlalchemy import create_engine,Column,or_
 from sqlalchemy import Integer,Text,Date,VARCHAR,SmallInteger,Boolean,ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker,relationship
@@ -47,16 +47,12 @@ class User(Base):
         except IntegrityError: raise ValueError("Пользователь с таким email уже существует")
 
     @classmethod
-    def select_user(cls,idscond:tuple=tuple()):
+    def select_user(cls,idscond=None):
         with Session() as session:
-            lenght = len(idscond)
-            if lenght == 0: return session.query(cls).all()
-            if lenght == 1 and type(idscond[0])==int: return session.query(cls).get(idscond[0])
-            if lenght == 1:
-                return session.query(cls).filter(idscond[0]).all()
-            if all(type(i)==int for i in idscond):
-                return session.query(cls).filter(" AND ".join(f"id == {i}" for i in idscond)).all()
-            raise ValueError("all elements of idscond must be of the same type ('str' or 'int')")
+            if idscond == None: return session.query(cls)
+            elif type(idscond)==int: return session.query(cls).get(idscond)
+            elif type(idscond)==list: return session.query(cls).filter(*idscond)
+            raise ValueError
 
 
 class Study(Base):
@@ -89,16 +85,12 @@ class Study(Base):
             session.commit()
     
     @classmethod
-    def select_exersize(cls,idscond:tuple=tuple()):
+    def select_exersize(cls,idscond=None):
         with Session() as session:
-            lenght = len(idscond)
-            if lenght == 0: return session.query(cls).all()
-            if lenght == 1 and type(idscond[0])==int: return session.query(cls).get(idscond[0])
-            if lenght == 1:
-                return session.query(cls).filter(idscond[0]).all()
-            if all(type(i)==int for i in idscond):
-                return session.query(cls).filter(" AND ".join(f"id == {i}" for i in idscond)).all()
-            raise ValueError("all elements of idscond must be of the same type ('str' or 'int')")
+            if idscond == None: return session.query(cls)
+            elif type(idscond)==int: return session.query(cls).get(idscond)
+            elif type(idscond)==list: return session.query(cls).filter(*idscond)
+            return tuple(idscond)
 
 
 class Results(Base):
@@ -115,25 +107,22 @@ class Results(Base):
         return f"Это вариант ученика {str(User.select_user((self.user_id,)))}. \
 Задание {str(Study.select_exersize((self.exersize_id,)))}."
     
+    @classmethod
     def add_test(cls,**kwargs):
         with Session() as session:
             if all(i in kwargs for i in ("user_id","exersize_id","variant")):
-                user = cls(**kwargs)
-                session.add(user)
+                test = cls(**kwargs)
+                session.add(test)
             else: raise ValueError("not all arguments to add new user")
             session.commit()
 
     @classmethod
-    def select_test(cls,idscond:tuple=tuple()):
+    def select_test(cls,idscond=None):
         with Session() as session:
-            lenght = len(idscond)
-            if lenght == 0: return session.query(cls).all()
-            if lenght == 1 and type(idscond[0])==int: return session.query(cls).get(idscond[0])
-            if lenght == 1:
-                return session.query(cls).filter(idscond[0]).all()
-            if all(type(i)==int for i in idscond):
-                return session.query(cls).filter(" AND ".join(f"id == {i}" for i in idscond)).all()
-            raise ValueError("all elements of idscond must be of the same type ('str' or 'int')")
+            if idscond == None: return session.query(cls)
+            elif type(idscond)==int: return session.query(cls).get(idscond)
+            elif type(idscond)==list: return session.query(cls).filter(*idscond)
+            raise ValueError
 
 
 Base.metadata.create_all(engine)

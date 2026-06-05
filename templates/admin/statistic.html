@@ -25,4 +25,25 @@
             </tr>
         {% endfor %}
     </table>
+    <h2>Статистика заданий</h2>
+    <table border="2px">
+        <tr>
+            <th>Предмет, тема</th>
+            <th>Индекс</th>
+            <th>Класс/курс</th>
+            <th>Задание</th>
+            <th>Ответ</th>
+            <th>Средний процент выполнения</th>
+        </tr>
+        {% for i in exersizes %}
+            <tr>
+                <th>{{ "Математика" if i.math else "Физика"}}, {{ i.theme }}</th>
+                <th>{{ i.index }}</th>
+                <th>{{ i.study_class }}</th>
+                <th>{{ i.exersize }}</th>
+                <th>{{ i.answer }}</th>
+                <th>{{ f2(i) }}%</th>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}

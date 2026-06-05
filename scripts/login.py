@@ -23,4 +23,6 @@ def initialize(app:Flask):
     @app.route("/login/validation",methods=["POST"])
     def validation():
         mail = request.form["email"]
-        return render_template("start.html",validate=ut.validate(mail),admin=ut.validate_admin(mail))
+        return render_template("start.html",
+                               validate=ut.validate(mail),
+                               admin=ut.validate_admin(mail))
