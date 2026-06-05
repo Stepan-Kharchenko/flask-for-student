@@ -30,12 +30,19 @@
                 <th>email</th>
             </tr>
             {% for i in users %}
-                <tr>
-                    <td><input type="checkbox" name="st{{ i.id }}" value="True"></td>
-                    <td>{{ i.first_name }} {{i.last_name }}</td>
-                    <td>{{ i.email }}</td>
-                </tr>
+                {% if i.last_name!="root" %}
+                    <tr>
+                        <td><input type="checkbox" name="st{{ i.id }}" value="True"></td>
+                        <td>{{ i.first_name }} {{i.last_name }}</td>
+                        <td>{{ i.email }}</td>
+                    </tr>
+                {% endif %}
             {% endfor %}
+            <tr>
+                <td><input type="checkbox" name="root" value="True"></td>
+                <td>Общий вариант</td>
+                <td>root@root.root</td>
+            </tr>
         </table><hr>
         <input type="submit" value="Составить">
     </form>

@@ -23,15 +23,21 @@ def initialize(app:Flask):
     def end_test():
         def sort(dct:dict,val:str):
             for i in dct:
-                if i[:2]==val: yield i
+                if i[:2]==val or (val=="st" and i=="root"): yield i
         d = request.form
         print(d)
-        for student in sort(d,"st"):
+        for student in (sort(d,"st") if "root" not in d else ("root")):
+            vars = [i.variant for i in m.Results.select_test([m.Results.user_id==user_id])]
+            maxvar = 0 if not vars else max(vars)
             for exersize in sort(d,"ex"):
-                user_id,exersize_id = int(student[2:]),int(exersize[2:])
+                exersize_id = int(exersize[2:])
+                if student=="root":
+                    user_id = m.User.select_user([m.User.last_name=="root",
+                                                  m.User.user_class==m.Study.select_exersize\
+                                                    (exersize_id).study_class])[0].id
+                else: user_id=int(student[2:])
+                print(user_id)
                 user = m.User.select_user(user_id)
-                vars = [i.variant for i in m.Results.select_test([m.Results.user_id==user_id])]
-                maxvar = 0 if not vars else max(vars)
                 m.Results.add_test(user_id=user_id,
                                    exersize_id=exersize_id,
                                    variant=maxvar+1)

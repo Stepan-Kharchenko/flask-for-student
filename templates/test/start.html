@@ -13,9 +13,16 @@
             </tr>
                 {% for i in dct %}
                     <tr>
-                        <td><input type="radio" name="variant" value="{{ i }}"></td>
-                        <td>{{ i }}</td>
+                        <td><input type="radio" name="variant" value="self{{ i }}"></td>
+                        <td>Личный {{ i }}</td>
                         <td>{{ dct[i] }}</td>
+                    </tr>
+                {% endfor %}
+                {% for i in root_dct %}
+                    <tr>
+                        <td><input type="radio" name="variant" value="root{{ i }}"></td>
+                        <td>Общий {{ i }}</td>
+                        <td>{{ root_dct[i] }}</td>
                     </tr>
                 {% endfor %}
         </table>

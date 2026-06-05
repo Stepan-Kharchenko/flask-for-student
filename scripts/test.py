@@ -8,24 +8,40 @@ def initialize(app:Flask):
             return (i.exersize_id for i in m.Results.select_test([m.Results.variant == var]))
         mail = request.args.get("email")
         user_id = m.User.select_user([m.User.email==mail])[0].id
-        d,variants = {},{i.variant for i in m.Results.select_test([user_id == m.Results.user_id,
+        root_id = m.User.select_user([m.User.user_class==m.User.select_user(user_id).user_class])[0].id
+        print(root_id)
+        variants = {i.variant for i in m.Results.select_test([user_id == m.Results.user_id,
+                                                                   m.Results.ball==-1])}
+        root_variants = {i.variant for i in m.Results.select_test([root_id == m.Results.user_id,
                                                                    m.Results.ball==-1])}
         math_themes = ("Алгебра","Геометрия","Вероятность и Статистика")
         physic_themes = ("Механика","МКТ и Термодинамика","Электромагнетизм","Квантовая")
-        for i in variants:
-            if all(m.Study.select_exersize(id).theme in math_themes for id in get_exersize_id(i)):
-                d[i]="Математика"
-            elif all(m.Study.select_exersize(id).theme in physic_themes for id in get_exersize_id(i)):
-                d[i]="Физика"
-            else: d[i]="Гибрид"
-        print(d)
-        return render_template("test/start.html",dct=d,email=mail)
+        d1,d2 = {},{}
+        for v,d in ((variants,d1),(root_variants,d2)):
+            for i in v:
+                if all(m.Study.select_exersize(id).theme in math_themes for id in get_exersize_id(i)):
+                    d[i]="Математика"
+                elif all(m.Study.select_exersize(id).theme in physic_themes for id in get_exersize_id(i)):
+                    d[i]="Физика"
+                else: d[i]="Гибрид"
+        print(d1)
+        print(d2)
+        return render_template("test/start.html",dct=d1,root_dct=d2,email=mail)
     
     @app.route("/test/go",methods=["POST","GET"])
     def gotest():
         var,mail = request.form["variant"],request.args.get("email")
         user = m.User.select_user([m.User.email == mail])[0]
-        ids = {i.id for i in m.Results.select_test([m.Results.variant==var, m.Results.user_id==user.id])}
+        uvar=int(var[4:])
+        if var[:4]=="root":
+            vars = [i.variant for i in m.Results.select_test([m.Results.user_id==user.id])]
+            maxvar = 0 if not vars else max(vars)
+            for i in m.Results.select_test([m.Results.variant==uvar,
+                                            m.Results.user_id==m.User.select_user([m.User.last_name=="root",
+                                                                                   m.User.user_class==user.user_class])[0].id]):
+                print("+"*100)
+                m.Results.add_test(user_id=user.id,exersize_id=i.exersize_id,variant=maxvar+1)
+        ids = {i.id for i in m.Results.select_test([m.Results.variant==maxvar+1,m.Results.user_id==user.id])}
         return render_template("test/test.html",ids=tuple(ids),email=mail,m=m)
     
     @app.route("/test/test",methods=["POST","GET"])
