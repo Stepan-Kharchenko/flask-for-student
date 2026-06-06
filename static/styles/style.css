@@ -1,0 +1,76 @@
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, inset 0 0 5px #ff0000;
+    border-color: #ff0000;
+  }
+  100% {
+    box-shadow: 0 0 20px #ff0000, 0 0 30px #ff0000, inset 0 0 20px #ff0000;
+    border-color: #ff0000;
+  }
+}
+
+
+main{
+  background-color: black;
+  color: white;
+  border: red solid 4px;
+  border-radius: 30px;
+  height: auto;
+  width: auto;
+  font-size: 30px;
+  button.large {
+    width: 700px;
+  } button {
+    background-color: green;
+    color: black;
+    width: 350px;
+    height: 50px;
+    font-size: 40px;
+    border-radius: 15px;
+    animation: pulse 1.5s infinite alternate;
+  }
+  input[type="text"],
+  input[type="email"] {
+    background-color: green;
+    color: black;
+    border: red solid 2px;
+    border-radius: 15px;
+    width: 400px;
+    height: 50px;
+    font-size: 40px;
+  } input[type="checkbox"],
+  input[type="radio"] {
+    width: 30px;
+    height: 30px;
+    accent-color: green;
+  }
+  select {
+    width: 50px;
+    height: 30px;
+    color: black;
+    background-color: green;
+    font-size: 25px;
+    border-radius: 10px;
+  } select.large {
+    width: 150px;
+  }
+  table {
+    border: green solid 2px;
+    border-collapse: collapse;
+  } th,td {
+    border: green solid 2px;
+    text-align: center;
+  } th {
+    color: green;
+  }
+  form > * {margin: 15px;}
+  .center {
+    text-align: center;
+  }
+} main > * {margin: 15px;}
+
+footer {
+    color: black;
+    a {color: black;}
+    font-size: 20px;
+}

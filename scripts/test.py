@@ -41,6 +41,7 @@ def initialize(app:Flask):
                                                                                    m.User.user_class==user.user_class])[0].id]):
                 print("+"*100)
                 m.Results.add_test(user_id=user.id,exersize_id=i.exersize_id,variant=maxvar+1)
+        else: maxvar = int(var[4:])-1
         ids = {i.id for i in m.Results.select_test([m.Results.variant==maxvar+1,m.Results.user_id==user.id])}
         return render_template("test/test.html",ids=tuple(ids),email=mail,m=m)
     

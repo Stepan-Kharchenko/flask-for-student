@@ -4,9 +4,9 @@
 
 {% block header %}<h1>Составить тест</h1><hr>{% endblock %}
 {% block main %}
-    <form method="post" action="/admin/test/end">
+    <form method="post" action="/admin/test/end" class="center">
         <h2>Выберите задания</h2>
-        <table border="4px">
+        <table>
             <tr>
                 <th>Выбор</th>
                 <th>Тема</th>
@@ -23,7 +23,7 @@
             {% endfor %}
         </table><hr>
         <h2>Выберите учеников</h2>
-        <table border="1px">
+        <table>
             <tr>
                 <th>Выбор</th>
                 <th>Имя Фамилия</th>
@@ -44,6 +44,6 @@
                 <td>root@root.root</td>
             </tr>
         </table><hr>
-        <input type="submit" value="Составить">
+        <button type="submit">Составить"</button>
     </form>
 {% endblock %}

@@ -2,7 +2,7 @@
 
 {% block title %}Тест{% endblock %}
 
-{% block header %}<h1>Пройдите тест</h1><hr><hr>{% endblock %}
+{% block header %}<h1>Пройдите тест</h1>{% endblock %}
 {% block main %}
     <form action="/test/test?email={{ email }}"  method="post">
         {% for i in ids %}
@@ -10,6 +10,8 @@
             {{ m.Study.select_exersize(m.Results.select_test(i).exersize_id).exersize }}
             <input type="text" name="answer{{ i }}" required><hr>
         {% endfor %}
-        <input type="submit" value="Отправить">
+        <div class="center">
+            <button type="submit">Отправить</button>
+        </div>
     </form>
 {% endblock %}

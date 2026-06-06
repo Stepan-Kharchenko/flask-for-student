@@ -5,7 +5,11 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker,relationship
 from sqlalchemy.exc import IntegrityError
 
-engine = create_engine("sqlite:///learning.db",echo=False)
+engine = create_engine("sqlite:///learning.db",
+                       pool_size=15,          # Базовое количество удерживаемых подключений (было 5)
+                       max_overflow=25,       # Сколько подключений можно создать сверх pool_size (было 1
+                       pool_timeout=60.0,
+                       echo=True)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 

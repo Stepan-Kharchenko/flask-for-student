@@ -26,7 +26,8 @@ def initialize(app:Flask):
                 if i[:2]==val or (val=="st" and i=="root"): yield i
         d = request.form
         print(d)
-        for student in (sort(d,"st") if "root" not in d else ("root")):
+        for student in (sort(d,"st") if "root" not in d else ("root",)):
+            user_id = int(student[2:])
             vars = [i.variant for i in m.Results.select_test([m.Results.user_id==user_id])]
             maxvar = 0 if not vars else max(vars)
             for exersize in sort(d,"ex"):

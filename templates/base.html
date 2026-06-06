@@ -3,9 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Название{% endblock %}</title>
+        {% block link %}<link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">{% endblock %}
     </head>
-    <body>
-        <header>
+    <body style="background-color: green;">
+        <header style="text-align: center; font-size: 40px">
             {% block header %}header{% endblock %}
         </header>
         <main>

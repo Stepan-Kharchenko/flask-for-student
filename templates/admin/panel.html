@@ -1,18 +1,16 @@
 {% extends "base.html" %}
-
 {% block title %}Админ панель{% endblock %}
-{% block header %}
-    <h1>Админ-панель</h1>
-{% endblock %}
+
+{% block header %}<h1>Админ-панель</h1>{% endblock %}
 {% block main %}
-    <h2>Добавить задание</h2>
-    <form method="post" action="/admin/add_exersize">
+    <form method="post" action="/admin/add_exersize" class="center">
+        <h2>Добавить задание</h2>
         <label>Физика</label><input type="radio" name="subject" value="physic" checked>
         <label>Математика</label><input type="radio" name="subject" value="math">
-        <input type="submit" value="Добавить">
+        <button type="submit" class="button-send">Добавить</button>
     </form><hr>
-    <h2>Составить тест</h2>
-    <form method="post" action="/admin/test">
+    <form method="post" action="/admin/test" class="center">
+        <h2>Составить тест</h2>
         <label>Физика</label><input type="radio" name="subject" value="physic">
         <label>Математика</label><input type="radio" name="subject" value="math">
         <label>Гибрид</label><input type="radio" name="subject" value="gibrid" checked><br>
@@ -20,10 +18,14 @@
             {% for i in (9,10,11,1,2,3,4,5,6) %}
                 <option value="{{ i }}">{{ i }}</option>
             {% endfor %}
-        </select><label> класса</label><br>
-        <input type="submit" value="Составить">
+        </select><label> класса</label>
+        <button type="submit" class="button-send">Составить</button>
     </form><hr>
-    <h2><a href="/admin/statistic">Посмотреть статистику</a></h2><hr>
+    <div class="center">
+        <button onclick="window.location.href='/admin/statistic'" class="large">
+            Посмотреть статистику
+        </button>
+    </div>
 {% endblock %}
 {% block footer %}
     <a href="/">Главная</a>|<a href="/login">Вход</a>|<a href="https://github.com/Stepan-Kharchenko/flask-for-student" target="_blank">Исходный код на github</a>

@@ -1,13 +1,18 @@
 {% extends "base.html" %}
 
 {% block title %}Teacher{% endblock %}
+{% block style %}style.css{% endblock %}
 
 {% block header %}<h1>Физика и математика</h1>{% endblock %}
-{% block main %}<h2>Приветствую, это веб приложение для помощи учителям физики и математики</h2>{% endblock %}
+{% block main %}
+    <h2>Приветствую, это веб приложение для помощи учителям физики и математики</h2>
+    <div class="center">
+        <button onclick="window.location.href='/registration'" class="button-onclick">Регистрация</button>
+        <button onclick="window.location.href='/login'" class="button-onclick">Вход</button>
+    </div>
+{% endblock %}
 {% block footer %}
-    <h3>Оставить отзыв: +7(981)980-15-73 ИЛИ step.harch.2214@mail.ru</h3>
-    <a href="/registration">Регистрация</a>|
-    <a href="/login">Вход</a>|
+    Оставить отзыв: <a href="tel:+79819801573">+7(981)980-15-73</a> ИЛИ <a href="mailto:step.harch.2214@mail.ru">step.harch.2214@mail.ru</a> ИЛИ 
     <a href="https://vk.com/club237310637?trackcode=655baa35RtzuL_zfAnoviQca2XkKhHKdfJ4z7i9zzhIV_89fbUyCtyzkN89qBhOLHBbYYwOya5Vwg2-au8oAUno&from=groups" target="_blank">
         ВК
     </a>

@@ -6,14 +6,14 @@
     <h1>Добавить задание по предмету "{{ {"physic":"Физика","math":"Математика"}[subject] }}"</h1>
 {% endblock %}
 {% block main %}
-    <h2>Заполните формы</h2>
-    <form method="post" action="/admin/add_exersize/end">
+    <form method="post" action="/admin/add_exersize/end" class="center">
+        <h2>Заполните формы</h2>
         <label>Класс/курс</label><select name="class">
             {% for i in (9,10,11,1,2,3,4,5,6) %}
                 <option value="{{ i }}">{{ i }}</option>
             {% endfor %}
         </select>
-        <label>Тема</label><select name="theme">
+        <label>Тема</label><select name="theme" class="large">
             {% for i in (("Механика","МКТ и Термодинамика","Электромагнетизм","Квантовая") if subject=="physic" else ("Алгебра","Геометрия","Вероятность и Статистика")) %}
                 <option value="{{ i }}">{{ i }}</option>
             {% endfor %}
@@ -24,6 +24,6 @@
         <label style="font-family:'Courier New', Courier, monospace">
             Введите ответ:&nbsp;&nbsp;
         </label><input type="text" name="answer" required><br>
-        <input type="submit" value="Добавить">
+        <button type="submit">Добавить</button>
     </form>
 {% endblock %}

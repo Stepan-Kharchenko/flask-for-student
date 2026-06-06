@@ -5,14 +5,16 @@
 {% block header %}<h1>Начало</h1>{% endblock %}
 {% block main %}
     {% if validate %}
-        {% if admin %}
-            <h2>Вы админ</h2>
-            <a href="/admin">Админ панель</a>|
-        {% endif %}
-        <a href="/test?email={{ email }}">Пройти тест</a>|
-        <a href="/login">Войти</a>
+        <div class="center">
+            {% if admin %}
+                <h2>Вы админ</h2>
+                <button onclick="window.location.href='/admin'" class="button-onclick">Админ панель</button>
+            {% endif %}
+                <button onclick="window.location.href='/test?email={{ email }}'" class="button-onclick">Пройти тест</button>
+                <button onclick="window.location.href='/login'" class="button-onclick">Войти</button>
+        </div>
     {% else %}
-        <h2>Вас нет в системе|<a href="/registration">Регистрация</a></h2>
+        <p style="font-size: 40px;" class="center">Вас нет в системе </h2><button onclick="window.location.href='/registration'">Регистрация</button>
     {% endif %}
 {% endblock %}
 {% block footer %}{% endblock %}
