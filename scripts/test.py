@@ -47,7 +47,8 @@ def initialize(app:Flask):
     @app.route("/test/test",methods=["POST","GET"])
     def endtest():
         mail,answers,count = request.args.get("email"),request.form,0
-        true_answers = {int(i[6:]): m.Study.select_exersize(m.Results.select_test([m.Results.exersize_id==int(i[6:])])[0].exersize_id).answer for i in answers}
+        print(answers)
+        true_answers = {int(i[6:]): m.Study.select_exersize(m.Results.select_test(int(i[6:])).exersize_id).answer for i in answers}
         for i in answers:
             with m.Session() as session:
                 result = session.query(m.Results).get(int(i[6:]))
