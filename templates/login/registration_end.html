@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Конец регистрации{% endblock %}
+
+{% block header %}
+    <h1>Вы {% if not reg %}не {% endif %}зарегестрированы</h1>
+{% endblock %}
+{% block main %}
+    <h3>
+        {% if reg %}
+            Спасибо, {{ d["last_name"] }} {{ d["first_name"] }}, вы зарегестрированы. Ваша почта - {{ d["email"] }}.
+        {% else %}
+            Пользователь с email {{ d["email"] }} уже существует.
+        {% endif %}
+    </h3>
+    <div class="center">
+        <button onclick="window.location.href='/'">Главная</button>
+    </div>
+{% endblock %}
+    

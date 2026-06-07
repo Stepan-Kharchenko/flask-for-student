@@ -20,4 +20,4 @@ def initialize(app:Flask):
         m.Study.add_exersize(**d,
                              math=(d["theme"] in ("Алгебра","Геометрия","Вероятность и Статистика")),
                              index=maxind+1)
-        return "Задание сохранено | <a href='/'>Главная</a> | <a href='/admin'>Админ-панель</a>"
+        return render_template("admin/add_end.html")

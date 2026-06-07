@@ -10,12 +10,16 @@ def initialize(app:Flask):
     def end_of_registration():
         try:
             d = dict(request.form)
+            print(d)
             d["math"],d["physic"] = "math" in d, "physic" in d
             d["user_class"] = d["class"]
             del d["class"]
             m.User.add_user(**d)
-            return f"Спасибо, {d['last_name']} {d['first_name']}. Ваши данные сохранены. | <a href='/'>Главная</a>"
-        except ValueError as e: return "Пользователь с таким email уже существует | <a href='/'>Главная</a>"
+            reg = True
+        except ValueError: reg = False
+        return render_template("login/registration_end.html",d=d,reg=reg)
+        #return "Пользователь с таким email уже существует | <a href='/'>Главная</a>"
+        #return f"Спасибо, {d['last_name']} {d['first_name']}. Ваши данные сохранены. | <a href='/'>Главная</a>"
 
     @app.route("/login")
     def login():

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Конец{% endblock %}
+
+{% block header %}<h1>Задание добавлено</h1>{% endblock %}
+{% block main %}
+    <div class="center">
+        <h2>{% block h2 %}Ваше задание добавлено{% endblock %}</h2>
+        <button onclick="window.location.href='/'">Главная</button>
+        <button onclick="window.location.href='/admin'">Админ-панель</button>
+    </div>
+{% endblock %}

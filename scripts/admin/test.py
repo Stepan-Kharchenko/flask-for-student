@@ -44,4 +44,4 @@ def initialize(app:Flask):
                 m.Results.add_test(user_id=user_id,
                                    exersize_id=exersize_id,
                                    variant=maxvar+1)
-        return "Сохранено"
+        return render_template("admin/test_end.html")

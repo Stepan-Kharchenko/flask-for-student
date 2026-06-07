@@ -4,20 +4,23 @@
 
 {% block header %}<h1>Ваши результаты</h1>{% endblock %}
 {% block main %}
-    <h2>У вас {{ count }} из {{ len }}</h2>
-    <table>
-        <tr>
-            <th>Номер</th>
-            <th>Ваш ответ</th>
-            <th>Правильный ответ</th>
-        </tr>
-        {% for i in range(len) %}
-            <tr {% if answers[i]==tanswers[i] %}style="background-color: green;"
-            {% else %} style="background-color: red;"{% endif %}>
-                <td>{{ i+1 }}</td>
-                <td>{{ answers[i] }}</td>
-                <td>{{ tanswers[i] }}</td>
+    <h2 class="center">У вас {{ count }} из {{ len }}</h2>
+    <div class="table-button">
+        <table>
+            <tr>
+                <th>Номер</th>
+                <th>Ваш ответ</th>
+                <th>Правильный ответ</th>
             </tr>
-        {% endfor %}
-    </table>
+            {% for i in range(len) %}
+                <tr {% if answers[i]==tanswers[i] %}style="background-color: green;"
+                {% else %} style="background-color: red;"{% endif %}>
+                    <td>{{ i+1 }}</td>
+                    <td>{{ answers[i] }}</td>
+                    <td>{{ tanswers[i] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <button onclick="window.location.href='/login'">Вход</button>
+    </div>
 {% endblock %}
