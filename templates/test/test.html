@@ -8,7 +8,7 @@
         {% for i in ids %}
             <h3>Задание {{ ids.index(i)+1 }}</h3>
             {{ m.Study.select_exersize(m.Results.select_test(i).exersize_id).exersize }}
-            <input type="text" name="answer{{ i }}" required><hr>
+            <input type="text" name="answer{{ i }}" required placeholder="Введите ответ"><hr>
         {% endfor %}
         <div class="center">
             <button type="submit">Отправить</button>
