@@ -59,4 +59,7 @@ def initialize(app:Flask):
                     result.ball,count = res,count+res
                     session.commit()
                 else: raise ValueError("result in table")
-        return f"У вас {count} из {len(answers)} правильных ответов<br><a href='/'>Главная</a>"
+        print(answers,true_answers,sep="\n")
+        return render_template("test/end.html",tanswers=list(true_answers.values()),
+                               count=count,answers=list(dict(answers).values()),
+                               len=len(answers),range=range)
