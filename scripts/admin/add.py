@@ -12,12 +12,12 @@ def initialize(app:Flask):
         d = dict(request.form)
         d["study_class"] = d["class"]
         del d["class"]
-        indexs = (self.index for self in m.Study.select_exersize((m.Study.theme == d["theme"],)))
+        indexs = (i.index for i in m.Study.select_exersize([m.Study.theme == d["theme"]]))
         print(indexs)
-        try: maxind = max(indexs) if indexs else 0
+        try: maxind = max(indexs)
         except ValueError: maxind = 0
         print(d,maxind)
         m.Study.add_exersize(**d,
                              math=(d["theme"] in ("Алгебра","Геометрия","Вероятность и Статистика")),
                              index=maxind+1)
-        return "Задание сохранено | <a href='/'>Главная</a>"
+        return "Задание сохранено | <a href='/'>Главная</a> | <a href='/admin'>Админ-панель</a>"

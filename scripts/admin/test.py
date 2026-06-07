@@ -25,9 +25,11 @@ def initialize(app:Flask):
             for i in dct:
                 if i[:2]==val or (val=="st" and i=="root"): yield i
         d = request.form
-        print(d)
-        for student in (sort(d,"st") if "root" not in d else ("root",)):
-            user_id = int(student[2:])
+        print(dict(d))
+        for student in (sort(d,"st") if "root" not in dict(d) else ("root",)):
+            uclass = m.Study.select_exersize(int(tuple(sort(d,"ex"))[0][2:])).study_class
+            user_id = int(student[2:]) if student!="root" else m.User.select_user([m.User.user_class==uclass,
+                                                                                   m.User.last_name=="root"])[0].id
             vars = [i.variant for i in m.Results.select_test([m.Results.user_id==user_id])]
             maxvar = 0 if not vars else max(vars)
             for exersize in sort(d,"ex"):
